@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://m1sfde0wqcrc"]
+
+[ext_resource type="Script" uid="uid://c17pom1in626n" path="res://Scripts/splash_screens.gd" id="1_q1prl"]
+[ext_resource type="PackedScene" uid="uid://b01vtgctswmh2" path="res://Scenes/starting_area.tscn" id="2_wnmvu"]
+
+[node name="SplashScreens" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q1prl")
+FinishedLoadScene = ExtResource("2_wnmvu")
+
+[node name="Screen1" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="Screen1"]
+layout_mode = 0
+offset_left = -51.0
+offset_top = -32.0
+offset_right = 1234.0
+offset_bottom = 691.0
+
+[node name="Text" type="Label" parent="Screen1"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 259.0
+offset_right = 945.0
+offset_bottom = 355.0
+pivot_offset = Vector2(657, 36)
+theme_override_font_sizes/font_size = 70
+text = "THIS IS A PLACEHOLDER"
+
+[node name="Screen2" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="Screen2"]
+layout_mode = 0
+offset_left = -51.0
+offset_top = -32.0
+offset_right = 1234.0
+offset_bottom = 691.0
+
+[node name="Text" type="Label" parent="Screen2"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 259.0
+offset_right = 945.0
+offset_bottom = 355.0
+pivot_offset = Vector2(657, 36)
+theme_override_font_sizes/font_size = 70
+text = "THIS IS A PLACEHOLDER 2!"
