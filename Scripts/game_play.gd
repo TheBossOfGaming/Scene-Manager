@@ -16,8 +16,7 @@ signal SceneAdded
 var lastArea
 
 func LoadScreenStart(loadingScreen) -> void:
-	if hud != null:
-		hud.add_child(loadingScreen)
+	pass
 
 func OnSceneAdded(area, loadingScreen) -> void:
 	pass

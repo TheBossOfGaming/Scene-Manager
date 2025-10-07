@@ -26,7 +26,6 @@ func startGame() -> void:
 	if started == false:
 		print("Started == false spawning world")
 		SceneManager.ChangeScene(FinishedLoadScene, get_tree().root, self, SceneManager.Actions.DELETE, SceneManager.Transitions.FADETOBLACK)
-		self.queue_free()
 		started = true
 	else:
 		print_debug("Game has already started")

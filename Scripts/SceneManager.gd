@@ -1,11 +1,9 @@
 #Node Stuff#
 extends Node
 #Signals#
-signal LoadStart
-signal LoadCompleted
-signal SceneAdded
+
 #TransitionScenes
-const FADE_TO_BLACK = preload("res://Scenes/Transitions/fade_to_black.tscn")
+const LOADING_SCREEN = preload("res://Scenes/Transitions/LoadingScreen.tscn")
 
 #Actions that we can take#
 enum Actions {
@@ -19,6 +17,7 @@ enum Transitions {
 }
 
 var hiddenScenes = []
+var loadingScreen : LoadingScreen
 
 # Starts the transition (Fire LoadStart, screen should be black)
 # Takes care of past scene (Does Action : so deletes or hide past scene)
@@ -26,39 +25,38 @@ var hiddenScenes = []
 # Finishes the transition (Fires LoadCompleted)
 # Management done
 
-func FadeToBlack() -> Control:
-	print("Should do a fade to black transition")
-	var scene = FADE_TO_BLACK.instantiate()
-	return scene
+func addLoadingScreen(transitionsType) -> void:
+	loadingScreen = LOADING_SCREEN.instantiate()
+	get_tree().root.add_child(loadingScreen)
+	loadingScreen.StartTransition(transitionsType)
 	
-func PixelDeath() -> Control:
-	print("Should do a pixel death transition")
-	var scene = FADE_TO_BLACK.instantiate()
-	return scene
+func LoadContent() -> void:
+	pass
 
 func ChangeScene(scene : PackedScene, PlaceNodeInHere : Node, PastScene : Node, Action : Actions, transition : Transitions) -> void:
 	# Does the transition #
 	match transition:
 		Transitions.FADETOBLACK:
-			var loadingscreen = FadeToBlack()
+			var type = "fade_to_black"
+			addLoadingScreen(type)
 			print_debug("Sending Loading Screen Signal")
-			LoadStart.emit(loadingscreen)
 		Transitions.PIXELDEATH:
+			var type = "fade_to_black"
+			addLoadingScreen(type)
 			print_debug("Sending Loading Screen Signal")
-			var loadingscreen = PixelDeath()
-			LoadStart.emit(loadingscreen)
-
+			
+	await(loadingScreen.Transition_To_Finshed)
+	
 	#Spawns in and adds the node to the location#
 	var newScene = scene.instantiate()
 	PlaceNodeInHere.add_child(newScene)
-	SceneAdded.emit()
 
 	# Has to change the scene to a new scene #
 	match Action:
 		Actions.DELETE:
 			PastScene.queue_free()
-			LoadCompleted.emit()
+			loadingScreen.finish_transition()
 		Actions.HIDE:
 			PastScene.visible = false
 			hiddenScenes.append(PastScene)
-			LoadCompleted.emit()
+			loadingScreen.finish_transition()
