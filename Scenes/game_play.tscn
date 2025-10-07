@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxc62g5dtoqjf"]
+
+[ext_resource type="Script" uid="uid://di6jgmby0w50c" path="res://Scripts/game_play.gd" id="1_ckfrc"]
+[ext_resource type="PackedScene" uid="uid://b01vtgctswmh2" path="res://Scenes/starting_area.tscn" id="2_363iw"]
+
+[node name="GamePlay" type="Node"]
+script = ExtResource("1_ckfrc")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AreasLoaded" type="Node3D" parent="."]
+
+[node name="StartingArea" parent="AreasLoaded" instance=ExtResource("2_363iw")]

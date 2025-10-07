@@ -1,35 +1,64 @@
+#Node Stuff#
 extends Node
+#Signals#
+signal LoadStart
+signal LoadCompleted
+signal SceneAdded
+#TransitionScenes
+const FADE_TO_BLACK = preload("res://Scenes/Transitions/fade_to_black.tscn")
 
+#Actions that we can take#
 enum Actions {
 	DELETE,
 	HIDE
 }
-
+#All the Transitions we can do#
 enum Transitions {
 	FADETOBLACK,
 	PIXELDEATH,
 }
 
-func FadeToBlack() -> void:
-	print("Should do a fade to black transition")
-	
-func PixelDeath() -> void:
-	print("Should do a pixel death transition")
+var hiddenScenes = []
 
-func ChangeScene(scene : PackedScene, Action : Actions, currentScene : Node, transition : Transitions) -> Node:
+# Starts the transition (Fire LoadStart, screen should be black)
+# Takes care of past scene (Does Action : so deletes or hide past scene)
+# Loads the new scene (Fire SceneAdded)
+# Finishes the transition (Fires LoadCompleted)
+# Management done
+
+func FadeToBlack() -> Control:
+	print("Should do a fade to black transition")
+	var scene = FADE_TO_BLACK.instantiate()
+	return scene
+	
+func PixelDeath() -> Control:
+	print("Should do a pixel death transition")
+	var scene = FADE_TO_BLACK.instantiate()
+	return scene
+
+func ChangeScene(scene : PackedScene, PlaceNodeInHere : Node, PastScene : Node, Action : Actions, transition : Transitions) -> void:
+	# Does the transition #
+	match transition:
+		Transitions.FADETOBLACK:
+			var loadingscreen = FadeToBlack()
+			print_debug("Sending Loading Screen Signal")
+			LoadStart.emit(loadingscreen)
+		Transitions.PIXELDEATH:
+			print_debug("Sending Loading Screen Signal")
+			var loadingscreen = PixelDeath()
+			LoadStart.emit(loadingscreen)
+
+	#Spawns in and adds the node to the location#
+	var newScene = scene.instantiate()
+	PlaceNodeInHere.add_child(newScene)
+	SceneAdded.emit()
+
 	# Has to change the scene to a new scene #
 	match Action:
 		Actions.DELETE:
-			currentScene.queue_free()
+			PastScene.queue_free()
+			LoadCompleted.emit()
 		Actions.HIDE:
-			currentScene.visible = false
-	match transition:
-		Transitions.FADETOBLACK:
-			FadeToBlack()
-		Transitions.PIXELDEATH:
-			PixelDeath()
-	
-	var sceneworld = scene.instantiate()
-	get_tree().root.add_child(sceneworld)
-	
-	return sceneworld
+			PastScene.visible = false
+			hiddenScenes.append(PastScene)
+			LoadCompleted.emit()

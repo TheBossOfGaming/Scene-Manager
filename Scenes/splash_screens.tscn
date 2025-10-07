@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://m1sfde0wqcrc"]
 
 [ext_resource type="Script" uid="uid://c17pom1in626n" path="res://Scripts/splash_screens.gd" id="1_q1prl"]
-[ext_resource type="PackedScene" uid="uid://b01vtgctswmh2" path="res://Scenes/starting_area.tscn" id="2_wnmvu"]
+[ext_resource type="PackedScene" uid="uid://dxc62g5dtoqjf" path="res://Scenes/game_play.tscn" id="2_wnmvu"]
 
 [node name="SplashScreens" type="Control"]
 layout_mode = 3

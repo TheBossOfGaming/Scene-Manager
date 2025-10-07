@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b01vtgctswmh2"]
+[gd_scene load_steps=7 format=3 uid="uid://b01vtgctswmh2"]
 
 [ext_resource type="Script" uid="uid://bt2ej1gnlychs" path="res://Scripts/starting_area.gd" id="1_rmvc1"]
+[ext_resource type="PackedScene" uid="uid://bpatcjqctvgf0" path="res://Scenes/testing_character.tscn" id="2_1op8g"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rmvc1"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -18,6 +19,7 @@ tonemap_mode = 2
 
 [node name="StartingArea" type="Node3D"]
 script = ExtResource("1_rmvc1")
+PlayerScene = ExtResource("2_1op8g")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.996493, -0.0836779, -3.65768e-09, 0, -4.37114e-08, 1, -0.0836779, 0.996493, 4.35581e-08, 0, 0, 0)
