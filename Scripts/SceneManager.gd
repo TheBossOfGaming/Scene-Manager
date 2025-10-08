@@ -1,7 +1,7 @@
 #Node Stuff#
 extends Node
 #Signals#
-
+signal LoadCompleted
 #TransitionScenes
 const LOADING_SCREEN = preload("res://Scenes/Transitions/LoadingScreen.tscn")
 
@@ -14,36 +14,48 @@ enum Actions {
 # Types of transitions here for easy auto completion #
 const TransitionsTypes : Dictionary[String, String] = {
 	FADETOBLACK = "fade_to_black",
-	SWIPETOLEFT = "swipe_to_left",
+	SWIPETOLEFT = "swipe_to_right",
 }
 
 var hiddenScenes = []
 var loadingScreen : LoadingScreen
 
-# Starts the transition (Fire LoadStart, screen should be black)
-# Takes care of past scene (Does Action : so deletes or hide past scene)
-# Loads the new scene (Fire SceneAdded)
-# Finishes the transition (Fires LoadCompleted)
-# Management done
-
-func ChangeScene(scene : PackedScene, PlaceNodeInHere : Node, PastScene : Node, Action : Actions, transition : String) -> void:
-	# Does the transition #
-	loadingScreen = LOADING_SCREEN.instantiate()
-	get_tree().root.add_child(loadingScreen)
-	loadingScreen.StartTransition(transition)
-			
-	await(loadingScreen.Transition_To_Finshed)
-	
-	#Spawns in and adds the node to the location#
-	var newScene = scene.instantiate()
-	PlaceNodeInHere.add_child(newScene)
-
+func DealWithAction(Action, PastScene, instantiateScene) -> void:
 	# Has to change the scene to a new scene #
 	match Action:
 		Actions.DELETE:
 			PastScene.queue_free()
+			LoadCompleted.emit(instantiateScene)
 			loadingScreen.finish_transition()
 		Actions.HIDE:
-			PastScene.visible = false
+			PastScene.hide()
 			hiddenScenes.append(PastScene)
+			LoadCompleted.emit(instantiateScene)
 			loadingScreen.finish_transition()
+
+func ChangeScene(NewScene : PackedScene, PlaceNodeInHere : Node, PastScene : Node, Action : Actions, transition : String) -> void:
+	# Does the transition #
+	loadingScreen = LOADING_SCREEN.instantiate()
+	get_tree().root.add_child(loadingScreen)
+	loadingScreen.StartTransition(transition)
+	await(loadingScreen.Transition_To_Finshed)
+	
+	#Spawns in and adds the node to the location#
+	var instantiateScene = NewScene.instantiate()
+	PlaceNodeInHere.add_child(instantiateScene)
+
+	DealWithAction(Action, PastScene, instantiateScene)
+			
+func LoadPastScene(CurrentScene : Node, Action : Actions, transition : String) -> void:
+	var pastScene : Node3D = hiddenScenes[0]
+		# Does the transition #
+	loadingScreen = LOADING_SCREEN.instantiate()
+	get_tree().root.add_child(loadingScreen)
+	loadingScreen.StartTransition(transition)
+	await(loadingScreen.Transition_To_Finshed)
+	
+	#Unhidden past scene#
+	pastScene.show()
+	hiddenScenes.erase(pastScene)
+	
+	DealWithAction(Action, CurrentScene, pastScene)

@@ -115,7 +115,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_g460i"]
-resource_name = "swipe_to_left"
+resource_name = "swipe_to_right"
 length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -157,7 +157,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_vy5ga"]
-resource_name = "swipe_from_left"
+resource_name = "swipe_from_right"
 length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -203,8 +203,8 @@ _data = {
 &"RESET": SubResource("Animation_f51h4"),
 &"fade_from_black": SubResource("Animation_s1n8j"),
 &"fade_to_black": SubResource("Animation_63eoh"),
-&"swipe_from_left": SubResource("Animation_vy5ga"),
-&"swipe_to_left": SubResource("Animation_g460i")
+&"swipe_from_right": SubResource("Animation_vy5ga"),
+&"swipe_to_right": SubResource("Animation_g460i")
 }
 
 [node name="LoadingScreen" type="Control"]
@@ -227,8 +227,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_peav0")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel"]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_shlas")
 }

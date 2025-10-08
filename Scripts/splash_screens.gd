@@ -24,7 +24,7 @@ func _ready() -> void:
 
 func startGame() -> void:
 	if started == false:
-		print("Started == false spawning world")
+		#print("Started == false spawning world")
 		SceneManager.ChangeScene(FinishedLoadScene, get_tree().root, self, SceneManager.Actions.DELETE, SceneManager.TransitionsTypes.FADETOBLACK)
 		started = true
 	else:

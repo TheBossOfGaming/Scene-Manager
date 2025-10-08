@@ -2,32 +2,29 @@
 extends Node
 class_name GamePlay
 
-# Signals #
-signal LoadStart
-signal LoadCompleted
-signal SceneAdded
-
 # Export Varibles #
 
 # Varibles #
 @onready var hud: Control = $HUD
 @onready var areas_loaded: Node3D = $AreasLoaded
 
-var lastArea
+var currentArea
 
-func LoadScreenStart(loadingScreen) -> void:
-	pass
-
-func OnSceneAdded(area, loadingScreen) -> void:
-	pass
+#func LoadScreenStart(loadingScreen : Control) -> void:
+	#print("LoadStart Connected")
+	#loadingScreen.reparent(hud)
+#
+#func OnSceneAdded(area, loadingScreen) -> void:
+	#pass 
 
 func OnLoadCompleted(area) -> void:
-	lastArea = area
+	#print(area)
+	currentArea = area
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(areas_loaded.get_child_count() - 1)
-	LoadStart.connect(LoadScreenStart)
-	SceneAdded.connect(OnSceneAdded)
-	LoadCompleted.connect(OnLoadCompleted)
+	#SceneManager.LoadStart.connect(LoadScreenStart)
+	#SceneManager.SceneAdded.connect(OnSceneAdded)
+	SceneManager.LoadCompleted.connect(OnLoadCompleted)
+	currentArea = $AreasLoaded/StartingArea
 	pass # Replace with function body.

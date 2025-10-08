@@ -6,8 +6,9 @@ var newArea = preload("res://Scenes/starting_node_2.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await get_tree().create_timer(2.0).timeout # Pauses for 2 seconds
-	print("Going to next scene")
+	print("Spawning player")
 	var loadedScene = PlayerScene.instantiate()
 	self.add_child(loadedScene)
-	await get_tree().create_timer(3.0).timeout # Pauses for 2 seconds
+	await get_tree().create_timer(2.0).timeout # Pauses for 2 seconds
+	print("Going to next scene")
 	SceneManager.ChangeScene(newArea, self.get_parent(), self, SceneManager.Actions.HIDE, SceneManager.TransitionsTypes.SWIPETOLEFT)

@@ -2,7 +2,7 @@ extends Control
 class_name LoadingScreen
 
 @onready var panel: Panel = $Panel
-@onready var animation_player: AnimationPlayer = $Panel/AnimationPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 signal Transition_To_Finshed
 
@@ -14,7 +14,6 @@ func StartTransition(transitionstype) -> void:
 	print("Should do the transition type ", transitionstype)
 	animationsThatPlayed = transitionstype
 	animation_player.play(transitionstype)
-	pass
 
 func finish_transition() -> void:
 	var ending_animation_name:String = animationsThatPlayed.replace("to","from")

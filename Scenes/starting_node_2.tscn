@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://d006fyn1k4wjk"]
+[gd_scene load_steps=6 format=3 uid="uid://d006fyn1k4wjk"]
+
+[ext_resource type="Script" uid="uid://cwb33aem2hpiy" path="res://Scenes/starting_node_2.gd" id="1_fvy68"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0nhxi"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -15,6 +17,7 @@ tonemap_mode = 2
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6c1vp"]
 
 [node name="StartingNode2" type="Node3D"]
+script = ExtResource("1_fvy68")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tlg3x")
