@@ -8,12 +8,13 @@ const LOADING_SCREEN = preload("res://Scenes/Transitions/LoadingScreen.tscn")
 #Actions that we can take#
 enum Actions {
 	DELETE,
-	HIDE
+	HIDE,
 }
 #All the Transitions we can do#
-enum Transitions {
-	FADETOBLACK,
-	PIXELDEATH,
+# Types of transitions here for easy auto completion #
+const TransitionsTypes : Dictionary[String, String] = {
+	FADETOBLACK = "fade_to_black",
+	SWIPETOLEFT = "swipe_to_left",
 }
 
 var hiddenScenes = []
@@ -25,25 +26,11 @@ var loadingScreen : LoadingScreen
 # Finishes the transition (Fires LoadCompleted)
 # Management done
 
-func addLoadingScreen(transitionsType) -> void:
+func ChangeScene(scene : PackedScene, PlaceNodeInHere : Node, PastScene : Node, Action : Actions, transition : String) -> void:
+	# Does the transition #
 	loadingScreen = LOADING_SCREEN.instantiate()
 	get_tree().root.add_child(loadingScreen)
-	loadingScreen.StartTransition(transitionsType)
-	
-func LoadContent() -> void:
-	pass
-
-func ChangeScene(scene : PackedScene, PlaceNodeInHere : Node, PastScene : Node, Action : Actions, transition : Transitions) -> void:
-	# Does the transition #
-	match transition:
-		Transitions.FADETOBLACK:
-			var type = "fade_to_black"
-			addLoadingScreen(type)
-			print_debug("Sending Loading Screen Signal")
-		Transitions.PIXELDEATH:
-			var type = "fade_to_black"
-			addLoadingScreen(type)
-			print_debug("Sending Loading Screen Signal")
+	loadingScreen.StartTransition(transition)
 			
 	await(loadingScreen.Transition_To_Finshed)
 	

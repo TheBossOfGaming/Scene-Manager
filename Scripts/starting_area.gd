@@ -10,4 +10,4 @@ func _ready() -> void:
 	var loadedScene = PlayerScene.instantiate()
 	self.add_child(loadedScene)
 	await get_tree().create_timer(3.0).timeout # Pauses for 2 seconds
-	SceneManager.ChangeScene(newArea, self.get_parent(), self, SceneManager.Actions.HIDE, SceneManager.Transitions.PIXELDEATH)
+	SceneManager.ChangeScene(newArea, self.get_parent(), self, SceneManager.Actions.HIDE, SceneManager.TransitionsTypes.SWIPETOLEFT)
